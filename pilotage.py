@@ -76,10 +76,13 @@ class PCA9685:
   def position_zero():
     for i in range (8):
       self.duty(i,self.setting[i][0])
-  def play(self,index, state,partition):
-       for dico_note[note] in partition:
+def convertir(partition):
+  return [dico_note[note] for note in partition]
+def play(self,index, state,partition):
+        new_partoche = convertir(partition)
+       for note in new_partoche:
            i=0
-           for element in dico_note[note]:
+           for element in note:
                 if element == 0:
                     self.duty(i,self.setting[i][0])
                 else:
