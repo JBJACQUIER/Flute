@@ -73,8 +73,14 @@ class PCA9685:
         data = ustruct.pack('<HH', on, off)
         self.i2c.writeto_mem(self.address, 0x06 + 4 * index,  data)
 
-    def play(self,index, state):
-        pass
+    def play(self,index, state,partition):
+       for dico_note[note] in partition:
+           i=0
+           for element in dico_note[note]:
+                if element == 0:
+                    self.duty(i,self.setting[i][0])
+                else:
+                    self.duty(i, self.setting[i][1])
 
     def calibrate(self, index):
         setup_complete = False
