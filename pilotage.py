@@ -77,6 +77,14 @@ class PCA9685:
     for i in range (8):
       self.duty(i,self.setting[i][0])
 def convertir(partition):
+  dico_notes={}
+  dico_notes["C"] = [1,1,1,1,1,1,1]
+  dico_notes["D"]= [1,1,1,1,1,1,0]
+  dico_notes["E"]=[1,1,1,1,1,0,0]
+  dico_notes["F"]=[1,1,1,1,0,1,1]
+  dico_notes["G"]=[1,1,1,0,0,0,0]
+  dico_notes["A"]=[1,1,0,0,0,0,0]
+  dico_notes["B"]=[1,0,0,0,0,0,0]
   return [dico_note[note] for note in partition]
 def play(self,index, state,partition):
         new_partoche = convertir(partition)
@@ -88,24 +96,7 @@ def play(self,index, state,partition):
                 else:
                     self.duty(i, self.setting[i][1])
 
-    def calibrate(self, index):
-        setup_complete = False
-        pwm0 = 50
-        pwm1 = 300
-        previous_cmd = None
-        print("calibration du servo-moteur : pwm entre 100 et 450, set0, set1, done.")
-        while not setup_complete:
-            move = input()
-            if move == 'done':
-                setup_complete = True
-                self.setting[index] = (pwm0, pwm1)
-            elif move == 'set0':
-                pwm0 = int(previous_cmd)
-            elif move == 'set1':
-                pwm1 = int(previous_cmd)
-            else:
-                self.duty(index, int(move))
-            previous_cmd = move
+   
 
     def duty(self, index, value=None, invert=False):
         if value is None:
