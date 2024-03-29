@@ -73,7 +73,10 @@ class PCA9685:
         data = ustruct.pack('<HH', on, off)
         self.i2c.writeto_mem(self.address, 0x06 + 4 * index,  data)
 
-    def play(self,index, state,partition):
+  def position_zero():
+    for i in range (8):
+      self.duty(i,self.setting[i][0])
+  def play(self,index, state,partition):
        for dico_note[note] in partition:
            i=0
            for element in dico_note[note]:
