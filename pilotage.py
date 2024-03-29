@@ -137,7 +137,7 @@ class PCA9685:
         self.i2c = i2c
         self.address = address
         self.reset()
-        self.setup = {}
+        self.setting = {}
 
     def _write(self, address, value):
         self.i2c.writeto_mem(self.address, address, bytearray([value]))
@@ -178,20 +178,19 @@ class PCA9685:
         setup_complete = False
         pwm0 = 50
         pwm1 = 300
-        previous_cmd = 0
-        print("calibration du servo-moteur")
+        previous_cmd = None
+        print("calibration du servo-moteur : pwm entre 100 et 450, set0, set1, done.")
         while not setup_complete:
             move = input()
             if move == 'done':
                 setup_complete = True
-                self.calibration[0] = pwm0
-                self.calibration[1] = pwm1
+                self.setting[index] = (pwm0, pwm1)
             elif move == 'set0':
-                pwm0 = float(previous_cmd)
+                pwm0 = int(previous_cmd)
             elif move == 'set1':
-                pwm1 = float(previous_cmd)
+                pwm1 = int(previous_cmd)
             else:
-                self.free_move(float(move))
+                self.duty(index, int(move))
             previous_cmd = move
 
     def duty(self, index, value=None, invert=False):
