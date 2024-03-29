@@ -3,7 +3,7 @@ from pyb import Timer, Pin, LED
 import time
 import ustruct
 
-
+partition = ["C","C","C","D","E","D","C","E","D","D","C"]
 # Témoin d'accès au fichier.
 print('-> pilotage')
 
